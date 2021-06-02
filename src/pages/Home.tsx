@@ -10,7 +10,7 @@ export default function Home() {
         <Link to="/register">登録</Link>
       </Button>
       <Button>
-        <Link to="#">検索</Link>
+        <Link to="/search">検索</Link>
       </Button>
     </div>
   );

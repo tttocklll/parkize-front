@@ -1,8 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import logo from "./logo.svg";
+import axios from "axios";
+import "./App.css";
 
 function App() {
+  const [data, setData] = useState<any>(null);
+  const onClick = async () => {
+    const params = {
+      mode: "register",
+      name: "tocky",
+      crossDomain: true,
+    };
+    const res = await axios.get(
+      "https://script.google.com/macros/s/AKfycbzeM6Cia-98YwTQvOriVDGw7-vI2nmrwS3cGUO9urWqozKpB7Xn/exec",
+      { params }
+    );
+    setData(res);
+    console.log(res);
+  };
   return (
     <div className="App">
       <header className="App-header">
@@ -18,6 +33,8 @@ function App() {
         >
           Learn React
         </a>
+        <button onClick={onClick}>clickme</button>
+        <p>{data && JSON.stringify(data.data)}</p>
       </header>
     </div>
   );

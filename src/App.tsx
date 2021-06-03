@@ -1,6 +1,10 @@
 import React, { useState } from "react";
-import logo from "./logo.svg";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import axios from "axios";
+
+import Home from "./pages/Home";
+import Register from "./pages/Register";
+import Search from "./pages/Search";
 import "./App.css";
 
 function App() {
@@ -12,7 +16,7 @@ function App() {
       crossDomain: true,
     };
     const res = await axios.get(
-      "https://script.google.com/macros/s/AKfycbzeM6Cia-98YwTQvOriVDGw7-vI2nmrwS3cGUO9urWqozKpB7Xn/exec",
+      "https://script.google.com/macros/s/AKfycbwqp8qIkYAgjC-q6E0UTm3t-R7MBxQVyjZpOaskqIfDLNMnjPPsVTIxj_5hNkkOtjaoPw/exec",
       { params }
     );
     setData(res);
@@ -20,22 +24,11 @@ function App() {
   };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <button onClick={onClick}>clickme</button>
-        <p>{data && JSON.stringify(data.data)}</p>
-      </header>
+      <Router>
+        <Route path="/" component={Home} />
+        <Route path="/register" component={Register} />
+        <Route path="/search" component={Search} />
+      </Router>
     </div>
   );
 }

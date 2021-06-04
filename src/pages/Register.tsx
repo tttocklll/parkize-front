@@ -1,12 +1,14 @@
-import { TextField, Button, Container } from "@material-ui/core";
-import { getRequest2GAS } from "../utils/GetRequest2GAS";
 import React, { useState } from "react";
+import { getRequest2GAS } from "../utils/GetRequest2GAS";
+import { Button, Form, Input, Layout } from "antd";
 
 export default function Register() {
   const [name, setName] = useState("");
   const [carNumber, setCarNumber] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const onClick = async () => {
+    setIsLoading(true);
     const params = {
       mode: "register",
       name,
@@ -15,23 +17,32 @@ export default function Register() {
     };
     const res = await getRequest2GAS(params);
     console.log(res);
+    setIsLoading(false);
   };
   return (
-    <Container>
+    <Layout.Content>
       <h1>Register</h1>
-      <form style={{ display: "flex", flexDirection: "column" }}>
-        <TextField
-          label="名前"
+      <Form>
+        <Form.Item label="名前" required>
+          <Input onChange={(e) => setName(e.target.value)} value={name} />
+        </Form.Item>
+        {/* TODO: エラーメッセージ（tooltipと同じで良さそう） */}
+        <Form.Item
+          label="車ナンバー"
+          tooltip="「・」は0で埋め、かならず4桁の数字で入力してください"
           required
-          onChange={(e) => setName(e.target.value)}
-        />
-        <TextField
-          label="車ナンバー 4桁 （「・」は0で入力してください）"
-          required
-          onChange={(e) => setCarNumber(e.target.value)}
-        />
-        <Button variant="contained" color="primary" onClick={onClick}>送信</Button>
-      </form>
-    </Container>
+        >
+          <Input
+            onChange={(e) => setCarNumber(e.target.value)}
+            value={carNumber}
+          />
+        </Form.Item>
+        <Form.Item>
+          <Button type="primary" onClick={onClick} loading={isLoading}>
+            送信
+          </Button>
+        </Form.Item>
+      </Form>
+    </Layout.Content>
   );
 }

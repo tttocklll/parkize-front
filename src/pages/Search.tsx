@@ -1,4 +1,4 @@
-import { Button, TextField, Paper, Card, CardContent, Container } from "@material-ui/core";
+import { Layout, Input, Form, Button, Descriptions } from "antd";
 import React, { useState } from "react";
 
 import { getRequest2GAS } from "../utils/GetRequest2GAS";
@@ -6,39 +6,48 @@ import { getRequest2GAS } from "../utils/GetRequest2GAS";
 export default function Home() {
   const [carNumber, setCarNumber] = useState("");
   const [data, setData] = useState<any>([]);
+  const [isLoading, setIsLoading] = useState(false);
+
   const onClick = async () => {
+    setIsLoading(true);
     const params = {
       mode: "search",
       car_number: carNumber,
       crossDomain: true,
     };
     const res = await getRequest2GAS(params);
-    console.log(res)
-    setData(res.data.search)
+    console.log(res);
+    setData(res.data.search);
+    setCarNumber("");
+    setIsLoading(false);
   };
   return (
-    <Container maxWidth="xs">
+    <Layout.Content>
       <h1>search</h1>
-      <div style={{ display: "flex", flexDirection: "column" }}>
-        <TextField label="車ナンバー 4桁 （「・」は0で入力してください）" onChange={e => setCarNumber(e.target.value)} required type="number" />
-        <Button onClick={onClick} variant="contained" color="primary">検索</Button>
-      </div>
-      <Paper elevation={3}>
-        {data.length !== 0 && (
-          <>
-            <h3>該当者一覧</h3>
-            {data.map((item: any, index: number) => (
-
-              <Card key={index}>
-                <CardContent>
-                  <p>名前：{item[0]}</p>
-                  <p>車のナンバー：{item[1]}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </>
-        )}
-      </Paper >
-    </Container>
+      <Form>
+        {/* TODO: エラーメッセージ（tooltipと同じで良さそう） */}
+        <Form.Item
+          label="車ナンバー 4桁"
+          tooltip="「・」は0で埋め、かならず4桁の数字で入力してください"
+          required
+        >
+          <Input
+            onChange={(e) => setCarNumber(e.target.value)}
+            value={carNumber}
+          />
+        </Form.Item>
+        <Form.Item>
+          <Button type="primary" onClick={onClick} loading={isLoading}>
+            検索
+          </Button>
+        </Form.Item>
+      </Form>
+      {data.length !== 0 &&
+        data.map((item: any, index: number) => (
+          <Descriptions title={item[0]}>
+            <Descriptions.Item label="車ナンバー">{item[1]}</Descriptions.Item>
+          </Descriptions>
+        ))}
+    </Layout.Content>
   );
 }

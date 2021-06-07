@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { getRequest2GAS } from "../utils/GetRequest2GAS";
 import { Button, Form, FormItemProps, Input, Layout } from "antd";
 import { SendOutlined } from "@ant-design/icons";
+
+import { getRequest2GAS } from "../utils/GetRequest2GAS";
+import InfoMessage from "../components/InfoMessage";
 
 export default function Register() {
   const [name, setName] = useState("");
@@ -9,6 +11,8 @@ export default function Register() {
   const [isLoading, setIsLoading] = useState(false);
   const [carNunmberStatus, setCarNumberStatus] =
     useState<FormItemProps["validateStatus"]>("");
+  const [info, setInfo] = useState("");
+  const [infoType, setInfoType] = useState<"success" | "error" | undefined>();
 
   const onClick = async () => {
     setIsLoading(true);
@@ -20,6 +24,15 @@ export default function Register() {
     };
     const res = await getRequest2GAS(params);
     console.log(res);
+    if (res.data.success) {
+      setInfo("登録しました！");
+      setInfoType("success");
+      setCarNumber("");
+      setName("");
+    } else {
+      setInfo(res.data.error);
+      setInfoType("error");
+    }
     setIsLoading(false);
   };
   const carNumberValidation = (value: string) => {
@@ -37,6 +50,7 @@ export default function Register() {
   return (
     <Layout.Content>
       <h1>登録</h1>
+      <InfoMessage message={info} type={infoType} />
       <Form>
         <Form.Item label="名前" required>
           <Input onChange={(e) => setName(e.target.value)} value={name} />

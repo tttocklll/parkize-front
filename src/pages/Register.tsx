@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { getRequest2GAS } from "../utils/GetRequest2GAS";
 import { Button, Form, FormItemProps, Input, Layout } from "antd";
-import { findAllByDisplayValue } from "@testing-library/dom";
+import { SendOutlined } from "@ant-design/icons";
 
 export default function Register() {
   const [name, setName] = useState("");
@@ -58,6 +58,7 @@ export default function Register() {
         <Form.Item>
           <Button
             type="primary"
+            icon={<SendOutlined />}
             onClick={onClick}
             loading={isLoading}
             disabled={!name || carNunmberStatus !== "success"}

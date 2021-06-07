@@ -5,7 +5,7 @@ import { getRequest2GAS } from "../utils/GetRequest2GAS";
 
 export default function Home() {
   const [carNumber, setCarNumber] = useState("");
-  const [data, setData] = useState<any>([]);
+  const [data, setData] = useState<any>();
   const [isLoading, setIsLoading] = useState(false);
 
   const onClick = async () => {
@@ -17,10 +17,11 @@ export default function Home() {
     };
     const res = await getRequest2GAS(params);
     console.log(res);
-    setData(res.data.search);
+    setData(res.data);
     setCarNumber("");
     setIsLoading(false);
   };
+
   return (
     <Layout.Content style={{ maxWidth: "600px" }}>
       <h1>検索</h1>
@@ -33,18 +34,23 @@ export default function Home() {
         value={carNumber}
         onChange={(e) => setCarNumber(e.target.value)}
       />
-      <h3>{data.length} 件該当しました。</h3>
       <Space direction="vertical" style={{ width: "100%" }}>
-        {data.length !== 0 &&
-          data.map((item: any, index: number) => (
-            <Card title={item[0]}>
-              <Descriptions bordered size="small">
-                <Descriptions.Item label="車ナンバー">
-                  {item[1]}
-                </Descriptions.Item>
-              </Descriptions>
-            </Card>
-          ))}
+        {!!data && (
+          <>
+            <h3>
+              {data.targetNumber}の検索結果：{data.result.length}件
+            </h3>
+            {data.result.map((item: any, index: number) => (
+              <Card title={item[0]} key={index}>
+                <Descriptions bordered size="small">
+                  <Descriptions.Item label="車ナンバー">
+                    {item[1]}
+                  </Descriptions.Item>
+                </Descriptions>
+              </Card>
+            ))}
+          </>
+        )}
       </Space>
     </Layout.Content>
   );

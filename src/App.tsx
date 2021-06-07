@@ -12,9 +12,17 @@ function App() {
     <div className="App">
       <Router>
         <Header />
-        <Route path="/register" component={Register} />
-        <Route path="/search" component={Search} />
-        <Route exact path="/" component={Home} />
+        <div
+          style={{
+            margin: "0px auto",
+            padding: "0px 20px",
+            maxWidth: "600px",
+          }}
+        >
+          <Route path="/register" component={Register} />
+          <Route path="/search" component={Search} />
+          <Route exact path="/" component={Home} />
+        </div>
       </Router>
     </div>
   );

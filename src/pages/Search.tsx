@@ -1,4 +1,4 @@
-import { Layout, Input, Button, Descriptions } from "antd";
+import { Layout, Input, Button, Descriptions, Card, Space } from "antd";
 import React, { useState } from "react";
 
 import { getRequest2GAS } from "../utils/GetRequest2GAS";
@@ -22,7 +22,7 @@ export default function Home() {
     setIsLoading(false);
   };
   return (
-    <Layout.Content>
+    <Layout.Content style={{ maxWidth: "600px" }}>
       <h1>検索</h1>
       <Input.Search
         placeholder="車ナンバー4桁"
@@ -34,13 +34,18 @@ export default function Home() {
         onChange={(e) => setCarNumber(e.target.value)}
       />
       <h3>{data.length} 件該当しました。</h3>
-
-      {data.length !== 0 &&
-        data.map((item: any, index: number) => (
-          <Descriptions title={item[0]}>
-            <Descriptions.Item label="車ナンバー">{item[1]}</Descriptions.Item>
-          </Descriptions>
-        ))}
+      <Space direction="vertical" style={{ width: "100%" }}>
+        {data.length !== 0 &&
+          data.map((item: any, index: number) => (
+            <Card title={item[0]}>
+              <Descriptions bordered size="small">
+                <Descriptions.Item label="車ナンバー">
+                  {item[1]}
+                </Descriptions.Item>
+              </Descriptions>
+            </Card>
+          ))}
+      </Space>
     </Layout.Content>
   );
 }

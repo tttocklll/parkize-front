@@ -1,23 +1,20 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { PageHeader, Button } from "antd";
 
 export default function Header() {
-  // const classes = useStyles();
+  const history = useHistory();
   return (
-    <div>
-      {/* <AppBar position="static">
-        <Toolbar>
-          <Typography variant="h6" className={classes.title}>
-            News
-          </Typography>
-          <Button color="inherit">
-            <Link to="/register">登録</Link>
-          </Button>
-          <Button color="inherit">
-            <Link to="/search">検索</Link>
-          </Button>
-        </Toolbar>
-      </AppBar> */}
-    </div>
+    <PageHeader
+      extra={[
+        <Button key="register">
+          <Link to="/register">登録</Link>
+        </Button>,
+        <Button key="search">
+          <Link to="/search">検索</Link>
+        </Button>,
+      ]}
+      onBack={() => history.goBack()}
+    />
   );
 }

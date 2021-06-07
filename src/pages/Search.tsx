@@ -1,4 +1,4 @@
-import { Layout, Input, Form, Button, Descriptions } from "antd";
+import { Layout, Input, Button, Descriptions } from "antd";
 import React, { useState } from "react";
 
 import { getRequest2GAS } from "../utils/GetRequest2GAS";
@@ -23,25 +23,18 @@ export default function Home() {
   };
   return (
     <Layout.Content>
-      <h1>search</h1>
-      <Form>
-        {/* TODO: エラーメッセージ（tooltipと同じで良さそう） */}
-        <Form.Item
-          label="車ナンバー 4桁"
-          tooltip="「・」は0で埋め、かならず4桁の数字で入力してください"
-          required
-        >
-          <Input
-            onChange={(e) => setCarNumber(e.target.value)}
-            value={carNumber}
-          />
-        </Form.Item>
-        <Form.Item>
-          <Button type="primary" onClick={onClick} loading={isLoading}>
-            検索
-          </Button>
-        </Form.Item>
-      </Form>
+      <h1>検索</h1>
+      <Input.Search
+        placeholder="車ナンバー4桁"
+        onSearch={onClick}
+        enterButton="検索"
+        size="large"
+        loading={isLoading}
+        value={carNumber}
+        onChange={(e) => setCarNumber(e.target.value)}
+      />
+      <h3>{data.length} 件該当しました。</h3>
+
       {data.length !== 0 &&
         data.map((item: any, index: number) => (
           <Descriptions title={item[0]}>

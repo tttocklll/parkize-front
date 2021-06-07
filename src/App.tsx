@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Register from "./pages/Register";
 import Search from "./pages/Search";
-import Header from "./components/Header"
+import Header from "./components/Header";
 import "./App.css";
 
 function App() {

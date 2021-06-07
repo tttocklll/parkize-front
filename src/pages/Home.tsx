@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Button } from "antd";
+import { Button, Layout } from "antd";
 
 export default function Home() {
   return (
-    <div>
+    <Layout.Content>
       <h1>home</h1>
       <Button type="primary" shape="round" size="large">
         <Link to="/register">登録</Link>
@@ -12,6 +12,6 @@ export default function Home() {
       <Button type="primary" shape="round" size="large">
         <Link to="/search">検索</Link>
       </Button>
-    </div>
+    </Layout.Content>
   );
 }

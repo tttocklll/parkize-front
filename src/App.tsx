@@ -5,11 +5,19 @@ import Home from "./pages/Home";
 import Register from "./pages/Register";
 import Search from "./pages/Search";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 import "./App.css";
 
 function App() {
   return (
-    <div className="App">
+    <div
+      className="App"
+      style={{
+        paddingBottom: "60px",
+        position: "relative",
+        minHeight: "100vh",
+      }}
+    >
       <Router>
         <Header />
         <div
@@ -23,6 +31,7 @@ function App() {
           <Route path="/search" component={Search} />
           <Route exact path="/" component={Home} />
         </div>
+        <Footer />
       </Router>
     </div>
   );

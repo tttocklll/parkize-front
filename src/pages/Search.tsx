@@ -10,13 +10,13 @@ export default function Home() {
 
   const onClick = async () => {
     setIsLoading(true);
+    setData(undefined);
     const params = {
       mode: "search",
       car_number: carNumber,
       crossDomain: true,
     };
     const res = await getRequest2GAS(params);
-    console.log(res);
     setData(res.data);
     setCarNumber("");
     setIsLoading(false);
@@ -40,11 +40,32 @@ export default function Home() {
             <h3>
               {data.targetNumber}の検索結果：{data.result.length}件
             </h3>
-            {data.result.map((item: any, index: number) => (
-              <Card title={item[0]} key={index}>
+            {data.result.map((item: any) => (
+              <Card title={`${item.name} 様`} key={item.name}>
                 <Descriptions bordered size="small">
-                  <Descriptions.Item label="車ナンバー">
-                    {item[1]}
+                  <Descriptions.Item label="車　ナンバー">
+                    {`${item.car_area} ${item.car_category} ${item.car_hiragana} ${item.car_number}`}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="会社名">
+                    {item.company_name}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="セクション">
+                    {item.section}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="状態">
+                    {item.status}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="入庫日時">
+                    {item.created_at &&
+                      new Date(item.created_at).toLocaleString("ja-JP", {
+                        timeZone: "JST",
+                      })}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="出庫日時">
+                    {item.left_at &&
+                      new Date(item.left_at).toLocaleString("ja-JP", {
+                        timeZone: "JST",
+                      })}
                   </Descriptions.Item>
                 </Descriptions>
               </Card>

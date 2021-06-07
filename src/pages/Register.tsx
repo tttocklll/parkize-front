@@ -22,6 +22,17 @@ export default function Register() {
   const [info, setInfo] = useState("");
   const [infoType, setInfoType] = useState<"success" | "error" | undefined>();
 
+  const initializeState = () => {
+    setName("");
+    setCarNumber("");
+    setCarArea("");
+    setCarCategory(undefined);
+    setCarHiragna("");
+    setCarName("");
+    setCompanyName("");
+    setSection("");
+  };
+
   const onClick = async () => {
     setIsLoading(true);
     const params = {
@@ -41,8 +52,7 @@ export default function Register() {
     if (res.data.success) {
       setInfo("登録しました！");
       setInfoType("success");
-      setCarNumber("");
-      setName("");
+      initializeState();
     } else {
       setInfo(res.data.error);
       setInfoType("error");

@@ -69,6 +69,21 @@ export default function Register() {
 
   return (
     <Layout.Content>
+      <Button
+        type="primary"
+        icon={<SendOutlined />}
+        shape="circle"
+        size="large"
+        disabled={!name || carNunmberStatus !== "success"}
+        style={{
+          position: "fixed",
+          bottom: "50px",
+          right: "30px",
+          zIndex: 100,
+        }}
+        onClick={onClick}
+        loading={isLoading}
+      />
       <h1>登録</h1>
       <Form>
         <Form.Item label="名前" required>

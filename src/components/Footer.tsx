@@ -9,7 +9,8 @@ export default function Footer() {
         left: 0,
         right: 0,
         bottom: 0,
-        height: "60px",
+        height: "40px",
+        padding: 10,
       }}
     >
       &copy; 2021 OHMURA Tokiya

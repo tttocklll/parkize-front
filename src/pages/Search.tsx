@@ -1,4 +1,4 @@
-import { Layout, Input, Button, Descriptions, Card, Space } from "antd";
+import { Layout, Input, Button, Descriptions, Card, Space, Switch } from "antd";
 import React, { useState } from "react";
 
 import { getRequest2GAS } from "../utils/GetRequest2GAS";
@@ -41,8 +41,34 @@ export default function Home() {
               {data.targetNumber}の検索結果：{data.result.length}件
             </h3>
             {data.result.map((item: any) => (
-              <Card title={`${item.name} 様`} key={item.name}>
-                <Descriptions bordered size="small">
+              <Card
+                title={`${item.name} 様`}
+                key={item.name}
+                actions={[
+                  <Button
+                    type="text"
+                    style={{ width: "100%", height: "100%" }}
+                    key="edit"
+                  >
+                    編集
+                  </Button>,
+                  <Button
+                    type="text"
+                    style={{ width: "100%", height: "100%" }}
+                    key="remove"
+                    danger
+                  >
+                    削除
+                  </Button>,
+                ]}
+                extra={[
+                  <Switch
+                    checkedChildren="未出庫"
+                    unCheckedChildren="出庫済"
+                  />,
+                ]}
+              >
+                <Descriptions bordered size="small" layout="vertical">
                   <Descriptions.Item label="車　ナンバー">
                     {`${item.car_area} ${item.car_category} ${item.car_hiragana} ${item.car_number}`}
                   </Descriptions.Item>
@@ -51,9 +77,6 @@ export default function Home() {
                   </Descriptions.Item>
                   <Descriptions.Item label="セクション">
                     {item.section}
-                  </Descriptions.Item>
-                  <Descriptions.Item label="状態">
-                    {item.status}
                   </Descriptions.Item>
                   <Descriptions.Item label="入庫日時">
                     {item.created_at &&

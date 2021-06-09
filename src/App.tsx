@@ -14,6 +14,7 @@ function App() {
     <div
       className="App"
       style={{
+        paddingTop: "80px",
         paddingBottom: "60px",
         position: "relative",
         minHeight: "100vh",

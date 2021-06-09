@@ -7,6 +7,15 @@ export default function Header() {
   const history = useHistory();
   return (
     <PageHeader
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 100,
+        background:
+          "linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.8))",
+      }}
       extra={[
         <Button key="register">
           <Link to="/register">登録</Link>

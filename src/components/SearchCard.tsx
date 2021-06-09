@@ -27,7 +27,6 @@ interface cardProps {
 export default function SearchCard({ item, onDelete, onFlip }: cardProps) {
   const [isLoadingSwitch, setIsLoadingSwitch] = useState(false);
   const [isLoadingAll, setIsLoadingAll] = useState(false);
-  const [isChecked, setIsChecked] = useState(item.status === "未出庫");
 
   const onClickFlip = async () => {
     setIsLoadingSwitch(true);

@@ -1,44 +1,93 @@
-import { Button, TextField, Paper, Card, CardContent, Container } from "@material-ui/core";
 import React, { useState } from "react";
+import { Layout, Input, Space, message } from "antd";
 
+import SearchCard from "../components/SearchCard";
 import { getRequest2GAS } from "../utils/GetRequest2GAS";
 
-export default function Home() {
+export default function Search() {
   const [carNumber, setCarNumber] = useState("");
-  const [data, setData] = useState<any>([]);
+  const [data, setData] = useState<any>();
+  const [isLoading, setIsLoading] = useState(false);
+
   const onClick = async () => {
+    setIsLoading(true);
+    setData(undefined);
     const params = {
       mode: "search",
       car_number: carNumber,
       crossDomain: true,
     };
     const res = await getRequest2GAS(params);
-    console.log(res)
-    setData(res.data.search)
+    setData(res.data);
+    setCarNumber("");
+    setIsLoading(false);
   };
-  return (
-    <Container maxWidth="xs">
-      <h1>search</h1>
-      <div style={{ display: "flex", flexDirection: "column" }}>
-        <TextField label="車ナンバー 4桁 （「・」は0で入力してください）" onChange={e => setCarNumber(e.target.value)} required type="number" />
-        <Button onClick={onClick} variant="contained" color="primary">検索</Button>
-      </div>
-      <Paper elevation={3}>
-        {data.length !== 0 && (
-          <>
-            <h3>該当者一覧</h3>
-            {data.map((item: any, index: number) => (
 
-              <Card key={index}>
-                <CardContent>
-                  <p>名前：{item[0]}</p>
-                  <p>車のナンバー：{item[1]}</p>
-                </CardContent>
-              </Card>
+  const onDelete = async (params: { [key: string]: any }) => {
+    const res = await getRequest2GAS(params);
+    if (res.data.success) {
+      const searchParams = {
+        mode: "search",
+        car_number: data.targetNumber,
+        crossDomain: true,
+      };
+      const res = await getRequest2GAS(searchParams);
+      setData(res.data);
+      message.success("削除されました");
+    } else {
+      message.error(res.data.error);
+    }
+  };
+
+  const onFlip = async (params: { [key: string]: any }) => {
+    const res = await getRequest2GAS(params);
+
+    if (res.data.success) {
+      const searchParams = {
+        mode: "search",
+        car_number: data.targetNumber,
+        crossDomain: true,
+      };
+      const res = await getRequest2GAS(searchParams);
+
+      setData(res.data);
+    } else {
+      message.error(res.data.error);
+    }
+  };
+
+  return (
+    <Layout.Content style={{ maxWidth: "600px" }}>
+      <h1>検索</h1>
+      <Input.Search
+        placeholder="車ナンバー（「・」は除く）"
+        onSearch={onClick}
+        enterButton="検索"
+        size="large"
+        loading={isLoading}
+        disabled={isLoading}
+        value={carNumber}
+        onChange={(e) => setCarNumber(e.target.value)}
+        type="number"
+        pattern="\d*"
+      />
+      <Space direction="vertical" style={{ width: "100%" }}>
+        {!!data && (
+          <>
+            <h3>
+              {data.targetNumber}の検索結果：{data.result.length}件
+            </h3>
+            {data.result.map((item: any) => (
+              <SearchCard
+                item={item}
+                key={`${item.created_at}${item.name}`}
+                onDelete={onDelete}
+                onFlip={onFlip}
+              />
             ))}
           </>
         )}
-      </Paper >
-    </Container>
+      </Space>
+    </Layout.Content>
   );
 }

@@ -1,37 +1,33 @@
-import React from "react"
-import { AppBar, Toolbar, Typography, Button } from "@material-ui/core"
-import { makeStyles } from '@material-ui/core/styles';
-import { Link } from "react-router-dom";
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 1,
-  },
-}));
+import React from "react";
+import { Link, useHistory } from "react-router-dom";
+import { PageHeader, Button } from "antd";
+import { HomeOutlined } from "@ant-design/icons";
 
 export default function Header() {
-  const classes = useStyles()
+  const history = useHistory();
   return (
-    <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar>
-          <Typography variant="h6" className={classes.title}>
-            News
-          </Typography>
-          <Button color="inherit">
-            <Link to="/register">登録</Link>
-          </Button>
-          <Button color="inherit">
-            <Link to="/search">検索</Link>
-          </Button>
-        </Toolbar>
-      </AppBar>
-    </div>
-  )
+    <PageHeader
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 100,
+        background:
+          "linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.8))",
+      }}
+      extra={[
+        <Button key="register">
+          <Link to="/register">登録</Link>
+        </Button>,
+        <Button key="search">
+          <Link to="/search">検索</Link>
+        </Button>,
+        <Link to="/" key="home">
+          <Button icon={<HomeOutlined />} type="text" />
+        </Link>,
+      ]}
+      onBack={() => history.goBack()}
+    />
+  );
 }

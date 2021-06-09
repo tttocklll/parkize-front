@@ -24,7 +24,7 @@ export default function Register() {
   const [companyName, setCompanyName] = useState("");
   const [section, setSection] = useState("");
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isSending, setIsSending] = useState(false);
   const [carNunmberStatus, setCarNumberStatus] =
     useState<FormItemProps["validateStatus"]>("");
 
@@ -44,7 +44,7 @@ export default function Register() {
   };
 
   const onClick = async (forceRegister?: boolean) => {
-    setIsLoading(true);
+    setIsSending(true);
     const params = {
       mode: "register",
       forceRegister,
@@ -68,7 +68,7 @@ export default function Register() {
     } else {
       message.error(res.data.error, 10);
     }
-    setIsLoading(false);
+    setIsSending(false);
   };
 
   const onOk = async () => {
@@ -98,21 +98,30 @@ export default function Register() {
           width: 60,
         }}
         onClick={() => onClick()}
-        loading={isLoading}
+        loading={isSending}
       />
       <h1>登録</h1>
       <Form>
         <Form.Item label="名前" required>
-          <Input onChange={(e) => setName(e.target.value)} value={name} />
+          <Input
+            onChange={(e) => setName(e.target.value)}
+            value={name}
+            disabled={isSending}
+          />
         </Form.Item>
         <Form.Item label="会社名">
           <Input
             onChange={(e) => setCompanyName(e.target.value)}
+            disabled={isSending}
             value={companyName}
           />
         </Form.Item>
         <Form.Item label="セクション">
-          <Input onChange={(e) => setSection(e.target.value)} value={section} />
+          <Input
+            onChange={(e) => setSection(e.target.value)}
+            value={section}
+            disabled={isSending}
+          />
         </Form.Item>
         <Form.Item
           label="車ナンバー"
@@ -124,27 +133,38 @@ export default function Register() {
           <Input
             onChange={(e) => onChangeCarNumber(e.target.value)}
             value={carNumber}
+            disabled={isSending}
             pattern="\d*"
             type="number"
           />
         </Form.Item>
         <Form.Item label="車地名" help="「品川」「練馬」など">
-          <Input onChange={(e) => setCarArea(e.target.value)} value={carArea} />
+          <Input
+            disabled={isSending}
+            onChange={(e) => setCarArea(e.target.value)}
+            value={carArea}
+          />
         </Form.Item>
         <Form.Item label="車ひらがな（1文字）">
           <Input
             onChange={(e) => setCarHiragna(e.target.value)}
             value={carHiragna}
+            disabled={isSending}
           />
         </Form.Item>
         <Form.Item label="車のカテゴリー番号" help='"300"，"584"など'>
           <Input
             onChange={(e) => setCarCategory(Number(e.target.value))}
             value={carCategory}
+            disabled={isSending}
           />
         </Form.Item>
         <Form.Item label="車種">
-          <Input onChange={(e) => setCarName(e.target.value)} value={carName} />
+          <Input
+            onChange={(e) => setCarName(e.target.value)}
+            value={carName}
+            disabled={isSending}
+          />
         </Form.Item>
 
         <Form.Item>
@@ -152,7 +172,7 @@ export default function Register() {
             type="primary"
             icon={<SendOutlined />}
             onClick={() => onClick()}
-            loading={isLoading}
+            loading={isSending}
             disabled={!name || carNunmberStatus !== "success"}
           >
             送信

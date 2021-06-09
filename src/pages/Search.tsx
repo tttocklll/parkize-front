@@ -43,13 +43,16 @@ export default function Search() {
     <Layout.Content style={{ maxWidth: "600px" }}>
       <h1>検索</h1>
       <Input.Search
-        placeholder="車ナンバー4桁"
+        placeholder="車ナンバー（「・」は除く）"
         onSearch={onClick}
         enterButton="検索"
         size="large"
         loading={isLoading}
+        disabled={isLoading}
         value={carNumber}
         onChange={(e) => setCarNumber(e.target.value)}
+        type="number"
+        pattern="\d*"
       />
       <Space direction="vertical" style={{ width: "100%" }}>
         {!!data && (

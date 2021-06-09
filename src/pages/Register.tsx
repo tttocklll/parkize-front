@@ -76,16 +76,9 @@ export default function Register() {
     onClick(true);
   };
 
-  const carNumberValidation = (value: string) => {
-    if (value.match(/[0-9]{4}/) && value.length === 4) {
-      setCarNumberStatus("success");
-    } else {
-      setCarNumberStatus("error");
-    }
-  };
   const onChangeCarNumber = (value: string) => {
     setCarNumber(value);
-    carNumberValidation(value);
+    setCarNumberStatus(value.length <= 4 ? "success" : "error");
   };
 
   return (
@@ -101,6 +94,8 @@ export default function Register() {
           bottom: "50px",
           right: "30px",
           zIndex: 100,
+          height: 60,
+          width: 60,
         }}
         onClick={() => onClick()}
         loading={isLoading}
@@ -121,15 +116,16 @@ export default function Register() {
         </Form.Item>
         <Form.Item
           label="車ナンバー"
-          tooltip="「・」は0で埋め、かならず4桁の数字で入力してください"
           required
           hasFeedback
           validateStatus={carNunmberStatus}
-          help="「・」は0で埋め、かならず4桁の数字で入力してください"
+          help="「・」は除いてください"
         >
           <Input
             onChange={(e) => onChangeCarNumber(e.target.value)}
             value={carNumber}
+            pattern="\d*"
+            type="number"
           />
         </Form.Item>
         <Form.Item label="車地名" help="「品川」「練馬」など">
@@ -141,7 +137,7 @@ export default function Register() {
             value={carHiragna}
           />
         </Form.Item>
-        <Form.Item label="車のカテゴリー番号" help='"300"，"584"などの番号'>
+        <Form.Item label="車のカテゴリー番号" help='"300"，"584"など'>
           <Input
             onChange={(e) => setCarCategory(Number(e.target.value))}
             value={carCategory}

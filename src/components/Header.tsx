@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
-import { PageHeader, Button, Layout } from "antd";
+import { PageHeader, Button } from "antd";
 import { HomeOutlined } from "@ant-design/icons";
 
 export default function Header() {

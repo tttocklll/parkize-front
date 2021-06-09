@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { Layout, Input, Space } from "antd";
+import { Layout, Input, Space, message } from "antd";
 
 import SearchCard from "../components/SearchCard";
 import { getRequest2GAS } from "../utils/GetRequest2GAS";
 
-export default function Home() {
+export default function Search() {
   const [carNumber, setCarNumber] = useState("");
   const [data, setData] = useState<any>();
   const [isLoading, setIsLoading] = useState(false);
@@ -21,6 +21,21 @@ export default function Home() {
     setData(res.data);
     setCarNumber("");
     setIsLoading(false);
+  };
+
+  const onDelete = async (params: { [key: string]: any }) => {
+    const res = await getRequest2GAS(params);
+    if (res.data.success) {
+      const searchParams = {
+        mode: "search",
+        car_number: data.targetNumber,
+        crossDomain: true,
+      };
+      const res = await getRequest2GAS(searchParams);
+      setData(res.data);
+    } else {
+      message.error(res.data.error);
+    }
   };
 
   return (
@@ -41,8 +56,12 @@ export default function Home() {
             <h3>
               {data.targetNumber}の検索結果：{data.result.length}件
             </h3>
-            {data.result.map((item: any) => (
-              <SearchCard item={item} />
+            {data.result.map((item: any, index: number) => (
+              <SearchCard
+                item={item}
+                key={`${item.created_at}${item.name}`}
+                onDelete={onDelete}
+              />
             ))}
           </>
         )}

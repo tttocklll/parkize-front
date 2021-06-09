@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Register from "./pages/Register";
 import Search from "./pages/Search";
+import AllItems from "./pages/AllItems";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import "./App.css";
@@ -29,6 +30,7 @@ function App() {
         >
           <Route path="/register" component={Register} />
           <Route path="/search" component={Search} />
+          <Route path="/list" component={AllItems} />
           <Route exact path="/" component={Home} />
         </div>
         <Footer />

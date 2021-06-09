@@ -13,6 +13,9 @@ export default function Home() {
         <Button type="primary" size="large" block>
           <Link to="/search">検索</Link>
         </Button>
+        <Button type="primary" size="large" block>
+          <Link to="/list">一覧</Link>
+        </Button>
       </Space>
     </Layout.Content>
   );

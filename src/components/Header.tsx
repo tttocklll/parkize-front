@@ -14,8 +14,8 @@ export default function Header() {
         <Button key="search">
           <Link to="/search">検索</Link>
         </Button>,
-        <Link to="/">
-          <Button key="home" icon={<HomeOutlined />} type="text" />
+        <Link to="/" key="home">
+          <Button icon={<HomeOutlined />} type="text" />
         </Link>,
       ]}
       onBack={() => history.goBack()}

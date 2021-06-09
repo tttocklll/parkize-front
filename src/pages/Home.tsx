@@ -7,13 +7,13 @@ export default function Home() {
     <Layout.Content>
       <h1>ホーム</h1>
       <Space direction="vertical" style={{ width: "100%" }} size="large">
-        <Button type="primary" size="large" block>
+        <Button type="primary" size="large" block key="register">
           <Link to="/register">登録</Link>
         </Button>
-        <Button type="primary" size="large" block>
+        <Button type="primary" size="large" block key="search">
           <Link to="/search">検索</Link>
         </Button>
-        <Button type="primary" size="large" block>
+        <Button type="primary" size="large" block key="list">
           <Link to="/list">一覧</Link>
         </Button>
       </Space>

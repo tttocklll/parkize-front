@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Button, Descriptions, Card, Switch, Spin } from "antd";
+import { DeleteOutlined } from "@ant-design/icons";
 
 import { getRequest2GAS } from "../utils/GetRequest2GAS";
 
@@ -64,19 +65,20 @@ export default function SearchCard({ item, onDelete }: cardProps) {
         title={`${item.name} 様`}
         key={`${item.created_at}${item.name}`}
         actions={[
-          <Button
-            type="text"
-            style={{ width: "100%", height: "100%" }}
-            key="edit"
-          >
-            編集
-          </Button>,
+          // <Button
+          //   type="text"
+          //   style={{ width: "100%", height: "100%" }}
+          //   key="edit"
+          // >
+          //   編集
+          // </Button>,
           <Button
             type="text"
             style={{ width: "100%", height: "100%" }}
             key="remove"
             danger
             onClick={onClickDelete}
+            icon={<DeleteOutlined />}
           >
             削除
           </Button>,

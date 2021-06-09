@@ -21,14 +21,15 @@ interface itemProps {
 interface cardProps {
   item: itemProps;
   onDelete: any;
+  onFlip: any;
 }
 
-export default function SearchCard({ item, onDelete }: cardProps) {
+export default function SearchCard({ item, onDelete, onFlip }: cardProps) {
   const [isLoadingSwitch, setIsLoadingSwitch] = useState(false);
   const [isLoadingAll, setIsLoadingAll] = useState(false);
   const [isChecked, setIsChecked] = useState(item.status === "未出庫");
 
-  const onFlip = async () => {
+  const onClickFlip = async () => {
     setIsLoadingSwitch(true);
     const params = {
       mode: "flip_status",
@@ -36,11 +37,7 @@ export default function SearchCard({ item, onDelete }: cardProps) {
       created_at: item.created_at,
       car_number: item.car_number,
     };
-    const res = await getRequest2GAS(params);
-    if (res.data.success) {
-      setIsChecked(!isChecked);
-    } else {
-    }
+    await onFlip(params);
     setIsLoadingSwitch(false);
   };
 
@@ -50,12 +47,13 @@ export default function SearchCard({ item, onDelete }: cardProps) {
     );
     if (isOk) {
       setIsLoadingAll(true);
-      onDelete({
+      const params = {
         mode: "delete",
         crossDomain: true,
         created_at: item.created_at,
         car_number: item.car_number,
-      });
+      };
+      onDelete(params);
     }
   };
 
@@ -65,13 +63,6 @@ export default function SearchCard({ item, onDelete }: cardProps) {
         title={`${item.name} 様`}
         key={`${item.created_at}${item.name}`}
         actions={[
-          // <Button
-          //   type="text"
-          //   style={{ width: "100%", height: "100%" }}
-          //   key="edit"
-          // >
-          //   編集
-          // </Button>,
           <Button
             type="text"
             style={{ width: "100%", height: "100%" }}
@@ -88,8 +79,8 @@ export default function SearchCard({ item, onDelete }: cardProps) {
             checkedChildren="未出庫"
             unCheckedChildren="出庫済"
             loading={isLoadingSwitch}
-            onClick={onFlip}
-            checked={isChecked}
+            onClick={onClickFlip}
+            checked={item.status === "未出庫"}
             key="switch"
           />,
         ]}

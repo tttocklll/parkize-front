@@ -39,6 +39,23 @@ export default function Search() {
     }
   };
 
+  const onFlip = async (params: { [key: string]: any }) => {
+    const res = await getRequest2GAS(params);
+
+    if (res.data.success) {
+      const searchParams = {
+        mode: "search",
+        car_number: data.targetNumber,
+        crossDomain: true,
+      };
+      const res = await getRequest2GAS(searchParams);
+
+      setData(res.data);
+    } else {
+      message.error(res.data.error);
+    }
+  };
+
   return (
     <Layout.Content style={{ maxWidth: "600px" }}>
       <h1>検索</h1>
@@ -60,11 +77,12 @@ export default function Search() {
             <h3>
               {data.targetNumber}の検索結果：{data.result.length}件
             </h3>
-            {data.result.map((item: any, index: number) => (
+            {data.result.map((item: any) => (
               <SearchCard
                 item={item}
                 key={`${item.created_at}${item.name}`}
                 onDelete={onDelete}
+                onFlip={onFlip}
               />
             ))}
           </>

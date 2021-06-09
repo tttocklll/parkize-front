@@ -1,7 +1,16 @@
 import React, { useState } from "react";
-import { Button, Form, FormItemProps, Input, Layout, message } from "antd";
+import {
+  Button,
+  Form,
+  FormItemProps,
+  Input,
+  Layout,
+  message,
+  Modal,
+} from "antd";
 import { SendOutlined } from "@ant-design/icons";
 
+import AccordionWithDescriptions from "../components/AccordionWithDescriptions";
 import { getRequest2GAS } from "../utils/GetRequest2GAS";
 
 export default function Register() {
@@ -19,6 +28,9 @@ export default function Register() {
   const [carNunmberStatus, setCarNumberStatus] =
     useState<FormItemProps["validateStatus"]>("");
 
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [sameNumbers, setSameNumbers] = useState([]);
+
   const initializeState = () => {
     setName("");
     setCarNumber("");
@@ -31,10 +43,11 @@ export default function Register() {
     setCarNumberStatus(undefined);
   };
 
-  const onClick = async () => {
+  const onClick = async (forceRegister?: boolean) => {
     setIsLoading(true);
     const params = {
       mode: "register",
+      forceRegister,
       name,
       car_number: carNumber,
       car_area: carArea,
@@ -46,15 +59,23 @@ export default function Register() {
       crossDomain: true,
     };
     const res = await getRequest2GAS(params);
-    console.log(res);
     if (res.data.success) {
-      message.success("登録しました！", 5);
+      message.success("登録しました！");
       initializeState();
+    } else if (res.data.sameNumbers) {
+      setSameNumbers(res.data.sameNumbers);
+      setIsModalVisible(true);
     } else {
       message.error(res.data.error, 10);
     }
     setIsLoading(false);
   };
+
+  const onOk = async () => {
+    setIsModalVisible(false);
+    onClick(true);
+  };
+
   const carNumberValidation = (value: string) => {
     if (value.match(/[0-9]{4}/) && value.length === 4) {
       setCarNumberStatus("success");
@@ -81,7 +102,7 @@ export default function Register() {
           right: "30px",
           zIndex: 100,
         }}
-        onClick={onClick}
+        onClick={() => onClick()}
         loading={isLoading}
       />
       <h1>登録</h1>
@@ -134,7 +155,7 @@ export default function Register() {
           <Button
             type="primary"
             icon={<SendOutlined />}
-            onClick={onClick}
+            onClick={() => onClick()}
             loading={isLoading}
             disabled={!name || carNunmberStatus !== "success"}
           >
@@ -142,6 +163,16 @@ export default function Register() {
           </Button>
         </Form.Item>
       </Form>
+      <Modal
+        title="同じナンバーが登録されています"
+        visible={isModalVisible}
+        onCancel={() => setIsModalVisible(false)}
+        onOk={onOk}
+      >
+        <p>本当に追加しますか？</p>
+
+        <AccordionWithDescriptions items={sameNumbers} />
+      </Modal>
     </Layout.Content>
   );
 }

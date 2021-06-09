@@ -33,6 +33,7 @@ export default function Search() {
       };
       const res = await getRequest2GAS(searchParams);
       setData(res.data);
+      message.success("削除されました");
     } else {
       message.error(res.data.error);
     }

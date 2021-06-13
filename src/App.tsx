@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import Home from "./pages/Home";
 import Register from "./pages/Register";
@@ -7,6 +7,12 @@ import Search from "./pages/Search";
 import AllItems from "./pages/AllItems";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import NotFound from "./components/NotFound";
+import SelectEvent from "./pages/SelectEvent";
+
+import AdminHome from "./pages/admin/AdminHome";
+import AdminCreateEvent from "./pages/admin/AdminCreateEvent";
+
 import "./App.css";
 
 function App() {
@@ -29,10 +35,16 @@ function App() {
             maxWidth: "600px",
           }}
         >
-          <Route path="/register" component={Register} />
-          <Route path="/search" component={Search} />
-          <Route path="/list" component={AllItems} />
-          <Route exact path="/" component={Home} />
+          <Switch>
+            <Route exact path="/register" component={Register} />
+            <Route exact path="/search" component={Search} />
+            <Route exact path="/list" component={AllItems} />
+            <Route exact path="/home" component={Home} />
+            <Route exact path="/" component={SelectEvent} />
+            <Route exact path="/admin/create" component={AdminCreateEvent} />
+            <Route exact path="/admin" component={AdminHome} />
+            <Route component={NotFound} />
+          </Switch>
         </div>
         <Footer />
       </Router>

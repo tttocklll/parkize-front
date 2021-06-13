@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { Button, Descriptions, Card, Switch, Spin } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 
-import { getRequest2GAS } from "../utils/GetRequest2GAS";
-
 interface itemProps {
   name: string;
   car_number: string;

@@ -62,6 +62,7 @@ export default function SelectEvent() {
       ) : (
         <List
           dataSource={events}
+          bordered
           renderItem={(item: any) => (
             <List.Item>
               <Button

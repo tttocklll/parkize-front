@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Layout, Spin } from "antd";
+import { Layout, Spin, Empty } from "antd";
 
 import AccordionWithDescriptions from "../components/AccordionWithDescriptions";
 import { getRequest2GAS } from "../utils/GetRequest2GAS";
@@ -28,13 +28,13 @@ export default function AllItems() {
       {list === undefined || eventName === "" ? (
         <Spin size="large" />
       ) : list.length === 0 ? (
-        <p>まだ何も登録されていません</p>
+        <Empty />
       ) : (
-        <>
+        <Empty>
           <p>全 {list.length} 件</p>
 
           <AccordionWithDescriptions items={list} />
-        </>
+        </Empty>
       )}
     </Layout.Content>
   );

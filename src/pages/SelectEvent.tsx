@@ -7,6 +7,7 @@ import { useGetEvents } from "../hooks/useGetEvents";
 
 export default function SelectEvent() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSending, setIsSending] = useState(false);
   const [password, setPassword] = useState("");
   const [selectedEvent, setSelectedEvent] = useState("");
 
@@ -20,6 +21,7 @@ export default function SelectEvent() {
   };
 
   const onOk = async () => {
+    setIsSending(true);
     const params = {
       mode: "login",
       cross_domain: true,
@@ -35,6 +37,7 @@ export default function SelectEvent() {
     } else {
       message.error(res.data.error);
     }
+    setIsSending(false);
   };
 
   const onCancel = () => {
@@ -70,12 +73,14 @@ export default function SelectEvent() {
       )}
 
       <Modal visible={isModalOpen} onCancel={onCancel} onOk={onOk}>
-        <h3>パスワードを入力</h3>
-        {selectedEvent}
-        <Input.Password
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+        <Spin size="large" spinning={isSending}>
+          <h3>パスワードを入力</h3>
+          {selectedEvent}
+          <Input.Password
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </Spin>
       </Modal>
     </Layout.Content>
   );

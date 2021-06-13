@@ -42,6 +42,11 @@ export default function AdminHome() {
             作成
           </Button>
         </Link>
+        <Link to="/">
+          <Button block size="large">
+            管理画面から出る
+          </Button>
+        </Link>
         {events === undefined ? (
           <Spin size="large" />
         ) : events.length === 0 ? (

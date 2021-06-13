@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { getRequest2GAS } from "../utils/GetRequest2GAS";
-import { List, Layout, Button, Modal, Input, Spin, message } from "antd";
+import { List, Layout, Button, Modal, Input, Spin, message, Empty } from "antd";
 
 import { useGetEvents } from "../hooks/useGetEvents";
 
@@ -49,7 +49,7 @@ export default function SelectEvent() {
       {events === undefined ? (
         <Spin size="large" />
       ) : events.length === 0 ? (
-        "まだ何も登録されていません"
+        <Empty description="データがありません" />
       ) : (
         <List
           dataSource={events}

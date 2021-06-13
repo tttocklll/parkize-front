@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Layout, Button, Spin, List, Space, message } from "antd";
+import { Layout, Button, Spin, List, Space, message, Empty } from "antd";
 import { PlusOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 
@@ -45,7 +45,7 @@ export default function AdminHome() {
         {events === undefined ? (
           <Spin size="large" />
         ) : events.length === 0 ? (
-          "まだ何も登録されていません"
+          <Empty description="データがありません" />
         ) : (
           <Spin spinning={isDeleting}>
             <List

@@ -12,6 +12,7 @@ import { SendOutlined } from "@ant-design/icons";
 
 import AccordionWithDescriptions from "../components/AccordionWithDescriptions";
 import { getRequest2GAS } from "../utils/GetRequest2GAS";
+import { useSession } from "../hooks/useSession";
 
 export default function Register() {
   // 登録する情報
@@ -31,6 +32,8 @@ export default function Register() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [sameNumbers, setSameNumbers] = useState([]);
 
+  const eventName = useSession();
+
   const initializeState = () => {
     setName("");
     setCarNumber("");
@@ -48,6 +51,7 @@ export default function Register() {
     const params = {
       mode: "register",
       forceRegister,
+      event_name: eventName,
       name,
       car_number: carNumber,
       car_area: carArea,
@@ -101,6 +105,7 @@ export default function Register() {
         loading={isSending}
       />
       <h1>登録</h1>
+      <h3>Event: {eventName}</h3>
       <Form>
         <Form.Item label="名前" required>
           <Input

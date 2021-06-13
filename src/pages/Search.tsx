@@ -3,11 +3,14 @@ import { Layout, Input, Space, message } from "antd";
 
 import SearchCard from "../components/SearchCard";
 import { getRequest2GAS } from "../utils/GetRequest2GAS";
+import { useSession } from "../hooks/useSession";
 
 export default function Search() {
   const [carNumber, setCarNumber] = useState("");
   const [data, setData] = useState<any>();
   const [isLoading, setIsLoading] = useState(false);
+
+  const eventName = useSession();
 
   const onClick = async () => {
     setIsLoading(true);
@@ -15,6 +18,7 @@ export default function Search() {
     const params = {
       mode: "search",
       car_number: carNumber,
+      event_name: eventName,
       crossDomain: true,
     };
     const res = await getRequest2GAS(params);
@@ -59,6 +63,7 @@ export default function Search() {
   return (
     <Layout.Content style={{ maxWidth: "600px" }}>
       <h1>検索</h1>
+      <h3>Event: {eventName}</h3>
       <Input.Search
         placeholder="車ナンバー（「・」は除く）"
         onSearch={onClick}

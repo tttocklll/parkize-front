@@ -9,6 +9,10 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import NotFound from "./components/NotFound";
 import SelectEvent from "./pages/SelectEvent";
+
+import AdminHome from "./pages/admin/AdminHome";
+import AdminCreateEvent from "./pages/admin/AdminCreateEvent";
+
 import "./App.css";
 
 function App() {
@@ -37,6 +41,8 @@ function App() {
             <Route exact path="/list" component={AllItems} />
             <Route exact path="/home" component={Home} />
             <Route exact path="/" component={SelectEvent} />
+            <Route exact path="/admin/create" component={AdminCreateEvent} />
+            <Route exact path="/admin" component={AdminHome} />
             <Route component={NotFound} />
           </Switch>
         </div>

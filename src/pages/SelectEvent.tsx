@@ -3,25 +3,16 @@ import { useHistory } from "react-router-dom";
 import { getRequest2GAS } from "../utils/GetRequest2GAS";
 import { List, Layout, Button, Modal, Input, Spin, message } from "antd";
 
+import { useGetEvents } from "../hooks/useGetEvents";
+
 export default function SelectEvent() {
-  const [events, setEvents] = useState<any[]>();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [password, setPassword] = useState("");
   const [selectedEvent, setSelectedEvent] = useState("");
 
   const history = useHistory();
 
-  useEffect(() => {
-    async function getEvents() {
-      const params = {
-        mode: "get_all_events",
-        cross_domain: true,
-      };
-      const res = await getRequest2GAS(params);
-      setEvents(res.data.result);
-    }
-    getEvents();
-  }, []);
+  const [events, _] = useGetEvents();
 
   const onClick = (eventName: string) => {
     setIsModalOpen(true);

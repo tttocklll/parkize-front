@@ -1,6 +1,6 @@
 import axios from "axios";
 const gasId =
-  "AKfycbxghBHf--bzp9-WLuM8JX1iK9ScKrzAPvUzVQ3PimYnKymuBnxfkYaFAbyF_hLt1IevJw";
+  "AKfycbyQ8sUqXtOtBfkWFOJkoGcnxpNEA_hkFWoFjmHno-KTpqG3hebrVG9Uj7Kgj6QxyiunXw";
 const GasUrl =
   process.env.GAS_URL ?? `https://script.google.com/macros/s/${gasId}/exec`;
 

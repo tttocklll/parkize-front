@@ -12,7 +12,7 @@ export default function SelectEvent() {
   const [selectedEvent, setSelectedEvent] = useState("");
 
   const history = useHistory();
-
+  // eslint-disable-next-line
   const [events, _] = useGetEvents();
 
   const onClick = (eventName: string) => {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { getRequest2GAS } from "../utils/GetRequest2GAS";
 
 export function useGetEvents() {
@@ -18,6 +18,6 @@ export function useGetEvents() {
 
   const triggerGetEvents = useCallback(() => {
     setTrigger(!trigger);
-  }, []);
+  }, [trigger]);
   return [events, triggerGetEvents] as const;
 }

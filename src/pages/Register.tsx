@@ -82,7 +82,7 @@ export default function Register() {
 
   const onChangeCarNumber = (value: string) => {
     setCarNumber(value);
-    setCarNumberStatus(value.length <= 4 ? "success" : "error");
+    setCarNumberStatus(value.length === 4 ? "success" : "error");
   };
 
   return (
@@ -133,7 +133,7 @@ export default function Register() {
           required
           hasFeedback
           validateStatus={carNunmberStatus}
-          help="「・」は除いてください"
+          help="「･」は「0」で入力してください（例：「･･12」→「0012」）"
         >
           <Input
             onChange={(e) => onChangeCarNumber(e.target.value)}

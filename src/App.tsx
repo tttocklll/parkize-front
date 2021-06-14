@@ -16,6 +16,7 @@ import AdminCreateEvent from "./pages/admin/AdminCreateEvent";
 import "./App.css";
 
 function App() {
+  console.log(process.env);
   return (
     <div
       className="App"

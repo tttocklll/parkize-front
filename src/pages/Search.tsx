@@ -65,7 +65,7 @@ export default function Search() {
       <h1>検索</h1>
       <h3>Event: {eventName}</h3>
       <Input.Search
-        placeholder="車ナンバー（「・」は除く）"
+        placeholder="車ナンバー（「･」→「0」）"
         onSearch={onClick}
         enterButton="検索"
         size="large"

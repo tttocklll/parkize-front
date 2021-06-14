@@ -30,11 +30,11 @@ export default function AllItems() {
       ) : list.length === 0 ? (
         <Empty />
       ) : (
-        <Empty>
+        <>
           <p>全 {list.length} 件</p>
 
           <AccordionWithDescriptions items={list} />
-        </Empty>
+        </>
       )}
     </Layout.Content>
   );

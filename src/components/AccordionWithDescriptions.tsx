@@ -13,6 +13,7 @@ interface itemProps {
   status: string;
   created_at: string;
   left_at?: string;
+  note?: string;
 }
 
 interface Props {
@@ -49,6 +50,7 @@ export default function AccordionWithDescriptions({ items }: Props) {
                   timeZone: "JST",
                 })}
             </Descriptions.Item>
+            <Descriptions.Item label="備考">{item.note}</Descriptions.Item>
           </Descriptions>
         </Collapse.Panel>
       ))}

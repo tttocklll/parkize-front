@@ -14,6 +14,7 @@ interface itemProps {
   status: string;
   created_at: string;
   left_at?: string;
+  note?: string;
 }
 
 interface cardProps {
@@ -104,6 +105,7 @@ export default function SearchCard({ item, onDelete, onFlip }: cardProps) {
                 timeZone: "JST",
               })}
           </Descriptions.Item>
+          <Descriptions.Item label="備考">{item.note}</Descriptions.Item>
         </Descriptions>
       </Card>
     </Spin>

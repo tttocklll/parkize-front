@@ -24,6 +24,7 @@ export default function Register() {
   const [carName, setCarName] = useState("");
   const [companyName, setCompanyName] = useState("");
   const [section, setSection] = useState("");
+  const [note, setNote] = useState("");
 
   const [isSending, setIsSending] = useState(false);
   const [carNunmberStatus, setCarNumberStatus] =
@@ -44,6 +45,7 @@ export default function Register() {
     setCompanyName("");
     setSection("");
     setCarNumberStatus(undefined);
+    setNote("");
   };
 
   const onClick = async (forceRegister?: boolean) => {
@@ -60,6 +62,7 @@ export default function Register() {
       car_name: carName,
       company_name: companyName,
       section: section,
+      note,
       crossDomain: true,
     };
     const res = await getRequest2GAS(params);
@@ -168,6 +171,13 @@ export default function Register() {
           <Input
             onChange={(e) => setCarName(e.target.value)}
             value={carName}
+            disabled={isSending}
+          />
+        </Form.Item>
+        <Form.Item label="備考">
+          <Input.TextArea
+            onChange={(e) => setNote(e.target.value)}
+            value={note}
             disabled={isSending}
           />
         </Form.Item>

@@ -34,6 +34,7 @@ export default function Search() {
         mode: "search",
         car_number: data.targetNumber,
         crossDomain: true,
+        event_name: eventName,
       };
       const res = await getRequest2GAS(searchParams);
       setData(res.data);
@@ -51,6 +52,7 @@ export default function Search() {
         mode: "search",
         car_number: data.targetNumber,
         crossDomain: true,
+        event_name: eventName,
       };
       const res = await getRequest2GAS(searchParams);
 
